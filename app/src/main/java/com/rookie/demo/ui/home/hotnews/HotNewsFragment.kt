@@ -36,9 +36,7 @@ class HotNewsFragment : BaseFragment() {
     }
 
     private fun loadData() {
-        viewModel.getLastTheme().observe(this, Observer {
-            it?.let { adapter.notifyDataSetChanged(it) }
-        })
+        viewModel.getLastTheme().observe(this, Observer { it?.let { adapter.notifyDataSetChanged(it) } })
     }
 
     private fun initView() {
