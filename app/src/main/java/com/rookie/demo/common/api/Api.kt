@@ -34,20 +34,12 @@ class Api {
                 .build()
                 .create(ZhihuService::class.java)
 
-        fun getStartInfo(width: Int, height: Int): Observable<GetStartInfoResponse> {
-            return service.getStartInfo(width, height)
-        }
+        fun getStartInfo(width: Int, height: Int) = service.getStartInfo(width, height)
 
-        fun getAllThemes(): Observable<GetAllThemesResponse> {
-            return service.getAllThemes()
-        }
+        fun getAllThemes() = service.getAllThemes()
 
-        fun getLastTheme(): Observable<GetLastThemeResponse> {
-            return service.getLastTheme()
-        }
+        fun getLastTheme() = service.getLastTheme()
 
-        fun getThemeResponse(id: Int): Observable<GetThemeResponse> {
-            return service.getThemeResponse(id)
-        }
+        fun getThemeResponse(id: Int) = service.getThemeResponse(id)
     }
 }

@@ -25,6 +25,7 @@ interface ZhihuService {
     @GET("api/4/news/latest")
     fun getLastTheme(): Observable<GetLastThemeResponse>
 
+    // 4.根据{id}获取消息
     @GET("api/4/theme/{id}")
     fun getThemeResponse(@Path("id") id: Int): Observable<GetThemeResponse>
 }
