@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable
  * Author: FK
  * Date：  2018/4/24.
  */
-abstract class SimpleObserver<T>(val viewModel: BaseViewModel) : Observer<T> {
+abstract class SimpleObserver<T>(private val viewModel: BaseViewModel) : Observer<T> {
 
     override fun onSubscribe(d: Disposable) {
         viewModel.netWorkState.value = LOADING
