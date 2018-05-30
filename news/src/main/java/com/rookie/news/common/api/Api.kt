@@ -36,9 +36,9 @@ class Api {
 
         fun getCategories() = service.getCategories()
 
-        fun getAllNews() = service.getAllNews()
+        fun getAllNews(category: String, size: String) = service.getAllNews(category, size)
 
-        fun getHotNews() = service.getHotNews()
+        fun getHotNews(size: String) = service.getHotNews(size)
 
         fun getSelectionNews() = service.getSelectionNews()
     }

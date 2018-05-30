@@ -5,6 +5,7 @@ import com.rookie.news.pojo.response.Data
 import com.rookie.news.pojo.response.Response
 import io.reactivex.Observable
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -21,11 +22,12 @@ interface NewsService {
                    @Query("size") size: String): Observable<Response<NewsResponse>>
 
     @GET("news/all")
-    fun getAllNews(): Observable<Response<NewsResponse>>
+    fun getAllNews(@Query("category") category: String, @Query("size") size: String):
+            Observable<Response<NewsResponse>>
 
     @GET("news/selection")
     fun getSelectionNews(): Observable<Response<NewsResponse>>
 
     @GET("news/hot")
-    fun getHotNews(): Observable<Response<NewsResponse>>
+    fun getHotNews(@Query("size") size: String): Observable<Response<NewsResponse>>
 }

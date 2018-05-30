@@ -18,7 +18,19 @@ android {
 
     }
 
+    signingConfigs {
+        debug {
+            storeFile file('dodopay.jks')
+            keyAlias 'dodopay'
+            keyPassword 'dodopay888'
+            storePassword 'dodopay888'
+        }
+    }
+
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -45,7 +57,8 @@ dependencies {
 
     //retrofit
     implementation deps.retrofit.runtime
-    implementation deps.retrofit.gson
+    implementation deps.retrofit.gson, { exclude group: "com.google.code.gson" }
+    implementation "com.google.code.gson:gson:2.8.2"
     implementation deps.retrofit.rxjava2
 
     //okhttp
