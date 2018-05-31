@@ -1,6 +1,8 @@
 package com.rookie.news.ui.main
 
 import android.arch.paging.PagedListAdapter
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,6 +11,7 @@ import android.view.ViewGroup
 import com.rookie.news.R
 import com.rookie.news.common.glide.GlideApp
 import com.rookie.news.pojo.response.News
+import com.rookie.news.ui.webview.WebViewActivity
 import kotlinx.android.synthetic.main.item_news.view.*
 
 /**
@@ -36,18 +39,34 @@ class NewsAdapter : PagedListAdapter<News, NewsAdapter.ViewHolder>(DIFF_CALLBACK
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val view = holder.itemView
-        getItem(position)?.let { item ->
-            view.tv_title.text = item.title
-            view.tv_tips.text = item.source
-            if (item.thumbnail_img.isNotEmpty()) {
-                view.iv.visibility = View.VISIBLE
-                GlideApp.with(view).load(item.thumbnail_img[0]).into(view.iv)
-            } else {
-                view.iv.visibility = View.GONE
+        holder.bind(getItem(position))
+    }
+
+    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        var news: News? = null
+
+        init {
+            view.setOnClickListener {
+                news?.let {
+                    val intent = Intent(view.context, WebViewActivity::class.java)
+                    intent.putExtra("news", news)
+                    view.context.startActivity(intent)
+                }
+            }
+        }
+
+        fun bind(news: News?) {
+            this.news = news
+            news?.let { item ->
+                view.tv_title.text = item.title
+                view.tv_tips.text = item.source
+                if (item.thumbnail_img.isNotEmpty()) {
+                    view.iv.visibility = View.VISIBLE
+                    GlideApp.with(view).load(item.thumbnail_img[0]).into(view.iv)
+                } else {
+                    view.iv.visibility = View.GONE
+                }
             }
         }
     }
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

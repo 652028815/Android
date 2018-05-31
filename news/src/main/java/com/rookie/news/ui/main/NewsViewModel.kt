@@ -18,7 +18,7 @@ import com.rookie.news.repository.news.NewsRepository
  */
 class NewsViewModel(private val repo: NewsRepository) : BaseViewModel() {
     val category = MutableLiveData<Category>()
-    private var repoResult: MutableLiveData<Listing<News>> = MutableLiveData<Listing<News>>()
+    private var repoResult: MutableLiveData<Listing<News>> = MutableLiveData()
     val refreshState = switchMap(repoResult, { it.refreshState })
     val loadMoreState = Transformations.switchMap(repoResult, { it.loadMoreState })
     val news = Transformations.switchMap(repoResult, { it.pagedList })

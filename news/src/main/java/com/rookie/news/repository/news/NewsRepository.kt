@@ -30,7 +30,9 @@ class NewsRepository {
         return Listing(livePagedList,
                 refreshState,
                 loadMoreState,
-                { sourceFactory.sourceLiveData.value?.invalidate() },
+                {
+                    sourceFactory.sourceLiveData.value?.invalidate()
+                },
                 { sourceFactory.sourceLiveData.value?.retry() })
     }
 }

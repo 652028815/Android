@@ -15,6 +15,8 @@ class NewsDataSourceFactory(val category: String) :
     val sourceLiveData = MutableLiveData<NewsPageKeyedDataSource>()
 
     override fun create(): DataSource<Response<NewsResponse>, News> {
-        return NewsPageKeyedDataSource(category)
+        val dataSource = NewsPageKeyedDataSource(category)
+        sourceLiveData.postValue(dataSource)
+        return dataSource
     }
 }
