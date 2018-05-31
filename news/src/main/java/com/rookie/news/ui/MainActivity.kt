@@ -4,20 +4,14 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
-import android.util.ArrayMap
-import android.util.Log
-import android.util.SparseArray
 import com.rookie.news.R
 import com.rookie.news.base.BaseActivity
 import com.rookie.news.base.LazyFragment
-import com.rookie.news.pojo.bean.NetWorkState
 import com.rookie.news.pojo.response.Category
-import com.rookie.news.ui.main.HotNewsFragment
+import com.rookie.news.ui.hot.HotNewsFragment
 import com.rookie.news.ui.main.NewsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 

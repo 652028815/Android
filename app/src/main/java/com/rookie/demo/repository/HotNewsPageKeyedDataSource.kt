@@ -2,7 +2,7 @@ package com.rookie.demo.repository
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
-import com.rookie.demo.common.api.Api
+import com.rookie.demo.api.Api
 import com.rookie.demo.pojo.bean.LastThemeStory
 import com.rookie.demo.pojo.bean.NetWorkState
 import com.rookie.demo.pojo.response.GetLastThemeResponse

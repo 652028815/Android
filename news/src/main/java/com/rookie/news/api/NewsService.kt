@@ -1,11 +1,10 @@
-package com.rookie.news.common.api
+package com.rookie.news.api
 
 import com.rookie.news.pojo.response.NewsResponse
 import com.rookie.news.pojo.response.Data
 import com.rookie.news.pojo.response.Response
 import io.reactivex.Observable
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -17,17 +16,15 @@ interface NewsService {
     fun getCategories(): Observable<Response<Data>>
 
     @GET("news/all")
-    fun getAllNews(@Query("first_id") firstId: String,
-                   @Query("last_id") lastId: String,
-                   @Query("size") size: String): Observable<Response<NewsResponse>>
-
-    @GET("news/all")
-    fun getAllNews(@Query("category") category: String, @Query("size") size: String):
+    fun getAllNews(@Query("category") category: String,
+                   @Query("size") size: String,
+                   @Query("last_id") lastId: String?):
             Observable<Response<NewsResponse>>
 
     @GET("news/selection")
     fun getSelectionNews(): Observable<Response<NewsResponse>>
 
     @GET("news/hot")
-    fun getHotNews(@Query("size") size: String): Observable<Response<NewsResponse>>
+    fun getHotNews(@Query("size") size: String,
+                   @Query("last_id") lastId: String?): Observable<Response<NewsResponse>>
 }

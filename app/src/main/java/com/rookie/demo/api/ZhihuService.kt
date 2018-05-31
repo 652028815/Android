@@ -1,4 +1,4 @@
-package com.rookie.demo.common.api
+package com.rookie.demo.api
 
 import com.rookie.demo.pojo.response.GetAllThemesResponse
 import com.rookie.demo.pojo.response.GetLastThemeResponse

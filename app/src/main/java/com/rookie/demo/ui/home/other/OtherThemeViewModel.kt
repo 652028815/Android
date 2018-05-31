@@ -2,7 +2,7 @@ package com.rookie.demo.ui.home.other
 
 import android.arch.lifecycle.MutableLiveData
 import com.rookie.demo.base.BaseViewModel
-import com.rookie.demo.common.api.Api
+import com.rookie.demo.api.Api
 import com.rookie.demo.pojo.response.GetThemeResponse
 import com.rookie.demo.common.rxjava.RxJavaPlugin
 import com.rookie.demo.common.rxjava.SimpleObserver

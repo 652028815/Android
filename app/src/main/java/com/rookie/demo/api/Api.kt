@@ -1,11 +1,6 @@
-package com.rookie.demo.common.api
+package com.rookie.demo.api
 
 import com.rookie.demo.common.constant.UrlConstant
-import com.rookie.demo.pojo.response.GetAllThemesResponse
-import com.rookie.demo.pojo.response.GetLastThemeResponse
-import com.rookie.demo.pojo.response.GetStartInfoResponse
-import com.rookie.demo.pojo.response.GetThemeResponse
-import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

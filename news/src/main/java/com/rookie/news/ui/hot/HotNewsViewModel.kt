@@ -1,30 +1,25 @@
-package com.rookie.news.ui.main
+package com.rookie.news.ui.hot
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.Transformations.map
 import android.arch.lifecycle.Transformations.switchMap
-import android.util.Log
 import com.rookie.news.base.BaseViewModel
-import com.rookie.news.pojo.response.Category
 import com.rookie.news.pojo.response.News
 import com.rookie.news.repository.Listing
-import com.rookie.news.repository.news.NewsRepository
+import com.rookie.news.repository.hot.HotNewsRepository
 
 /**
  * Author: FK
- * Date：  2018/5/28.
+ * Date：  2018/5/30.
  */
-class NewsViewModel(private val repo: NewsRepository) : BaseViewModel() {
-    val category = MutableLiveData<Category>()
-    private var repoResult: MutableLiveData<Listing<News>> = MutableLiveData<Listing<News>>()
+class HotNewsViewModel(val repo: HotNewsRepository) : BaseViewModel() {
+    private val repoResult = MutableLiveData<Listing<News>>()
     val refreshState = switchMap(repoResult, { it.refreshState })
     val loadMoreState = Transformations.switchMap(repoResult, { it.loadMoreState })
     val news = Transformations.switchMap(repoResult, { it.pagedList })
 
-    fun lazyLoadData() {
-        repoResult.value = repo.getDatas(category.value?.alias ?: "", 15)
+    fun lazyLoadData(){
+        repoResult.postValue(repo.getDatas(15))
     }
 
     fun refresh() {

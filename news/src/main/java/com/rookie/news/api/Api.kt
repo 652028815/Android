@@ -1,10 +1,7 @@
-package com.rookie.news.common.api
+package com.rookie.news.api
 
 import com.rookie.news.common.constant.UrlConstant
 import com.rookie.news.common.retrofit.SecretInterceptor
-import com.rookie.news.pojo.response.Data
-import com.rookie.news.pojo.response.Response
-import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -36,9 +33,10 @@ class Api {
 
         fun getCategories() = service.getCategories()
 
-        fun getAllNews(category: String, size: String) = service.getAllNews(category, size)
+        fun getAllNews(category: String, size: String, lastId: String?) =
+                service.getAllNews(category, size, lastId)
 
-        fun getHotNews(size: String) = service.getHotNews(size)
+        fun getHotNews(size: String, lastId: String?) = service.getHotNews(size, lastId)
 
         fun getSelectionNews() = service.getSelectionNews()
     }

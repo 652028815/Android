@@ -1,20 +1,22 @@
 package com.rookie.news.ui.main
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.rookie.news.R
-import com.rookie.news.base.BaseFragment
 import com.rookie.news.base.LazyFragment
-import com.rookie.news.pojo.bean.NetWorkState
+import com.rookie.news.pojo.bean.NetworkState
 import com.rookie.news.pojo.response.Category
 import com.rookie.news.pojo.response.News
+import com.rookie.news.repository.news.NewsRepository
 import kotlinx.android.synthetic.main.fragment_main_news.*
 
 /**
@@ -37,43 +39,53 @@ class NewsFragment : LazyFragment() {
     private lateinit var viewModel: NewsViewModel
     private lateinit var adapter: NewsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initData()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main_news, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initData()
         initView()
     }
 
+    private fun initData() {
+        viewModel = ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
+                return NewsViewModel(NewsRepository()) as T
+            }
+        })[NewsViewModel::class.java]
+        val category = arguments?.getParcelable<Category>("data")
+        viewModel.category.postValue(category)
+
+        viewModel.news.observe(this, Observer<PagedList<News>> {
+            adapter.submitList(it)
+        })
+    }
+
     private fun initView() {
-        adapter = NewsAdapter(emptyList<News>().toMutableList())
+        adapter = NewsAdapter()
         recycler_view.layoutManager = LinearLayoutManager(context)
         recycler_view.adapter = adapter
 
-        viewModel.netWorkState.observe(this, Observer {
-            refresh_layout.isRefreshing = it == NetWorkState.LOADING
+        viewModel.refreshState.observe(this, Observer {
+            if (!it!!.msg.isNullOrEmpty()) {
+                Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
+            } else {
+                refresh_layout.isRefreshing = it == NetworkState.LOADING
+            }
+        })
+        viewModel.loadMoreState.observe(this, Observer {
+            if (!it!!.msg.isNullOrEmpty()) {
+                Toast.makeText(context, it.msg, Toast.LENGTH_SHORT).show()
+            }
         })
 
-        refresh_layout.setOnRefreshListener { viewModel.getNews() }
-    }
-
-    private fun initData() {
-        viewModel = ViewModelProviders.of(this).get(NewsViewModel::class.java)
-        val category = arguments?.getParcelable<Category>("data")
-        viewModel.category = category
+        refresh_layout.setOnRefreshListener { viewModel.refresh() }
     }
 
     override fun lazyLoadData() {
-        viewModel.getNews().observe(this, Observer {
-            it?.news?.let {
-                adapter.refresh(it)
-            }
-        })
+        viewModel.lazyLoadData()
     }
 }
